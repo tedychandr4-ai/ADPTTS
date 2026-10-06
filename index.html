@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tautan Tim</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Newsreader:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef0f4;--card:#fff;--ink:#1b2335;--mut:#62697b;--line:#dde1e9;--acc:#9a7b3f;--hero:#182238;--heroink:#f4f1ea;--pri:#182238;--onpri:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1420;--card:#172033;--ink:#e8ebf2;--mut:#9aa3b8;--line:#27314a;--acc:#d6b36a;--hero:#0a0f1a;--pri:#d6b36a;--onpri:#0f1420}}
+:root[data-theme="dark"]{--bg:#0f1420;--card:#172033;--ink:#e8ebf2;--mut:#9aa3b8;--line:#27314a;--acc:#d6b36a;--hero:#0a0f1a;--pri:#d6b36a;--onpri:#0f1420}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Manrope,system-ui,sans-serif}
+header{background:var(--hero);color:var(--heroink);padding:44px 20px 64px}
+.wrap{max-width:960px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+h1{font:600 clamp(2.2rem,6vw,3.4rem)/1.05 Newsreader,Georgia,serif;margin:0 0 10px;letter-spacing:-.01em}
+.sub{margin:0;max-width:46ch;color:color-mix(in srgb,var(--heroink) 72%,transparent)}
+.who{display:flex;gap:10px;align-items:center}
+#role{display:none;font-size:.82rem;padding:5px 11px;border:1px solid color-mix(in srgb,var(--heroink) 35%,transparent);border-radius:99px;white-space:nowrap}
+#q{display:block;width:100%;max-width:460px;margin-top:28px;padding:13px 16px;font:inherit;color:var(--heroink);background:color-mix(in srgb,var(--heroink) 10%,transparent);border:1px solid color-mix(in srgb,var(--heroink) 28%,transparent);border-radius:12px}
+#q::placeholder{color:color-mix(in srgb,var(--heroink) 55%,transparent)}
+main{max-width:960px;margin:-34px auto 0;padding:0 20px 56px}
+.grid{display:grid;gap:18px;grid-template-columns:1fr}
+@media (min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+section.cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 22px 20px}
+section.cat:before{content:"";display:block;width:34px;height:3px;background:var(--acc);margin-bottom:14px}
+h2{font:600 1.35rem/1.25 Newsreader,Georgia,serif;margin:0 0 4px}
+.desc{color:var(--mut);font-size:.9rem;margin:0 0 14px}
+a.item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 2px;border-top:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:600}
+a.item svg{flex:none;width:16px;height:16px;stroke:var(--mut);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .15s}
+a.item:hover{color:var(--acc)}
+a.item:hover svg{stroke:var(--acc)}
+a.item small{font-weight:400;color:var(--mut)}
+input:focus,a:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.empty{display:none;color:var(--mut);text-align:center;padding:30px 0}
+button{font:inherit;font-weight:600;font-size:.92rem;padding:9px 15px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.pri{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
+#edit{display:none;background:var(--acc);color:var(--hero);border-color:var(--acc)}
+.note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0;padding:12px 16px;margin-bottom:18px;color:var(--mut);font-size:.92rem}
+.edit .grid{grid-template-columns:1fr}
+.eg{display:grid;gap:8px}
+.eg input,.row input{width:100%;padding:10px 12px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px}
+.row{display:grid;grid-template-columns:1fr 1.4fr auto;gap:6px}
+@media (max-width:520px){.row{grid-template-columns:1fr auto}}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.msg{color:var(--mut);margin-top:14px;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="top"><h1>Tautan Tim</h1>
+<div class="who"><button id="edit" type="button">Ubah</button></div></div>
+<p class="sub">Semua link kerja tim di satu tempat. Simpan halaman ini di bookmark atau pin di grup.</p>
+<input id="q" type="search" placeholder="Cari link, misalnya: surat" aria-label="Cari link">
+</div></header>
+<main>
+<div id="note" class="note" hidden>Mode pengubah. Setelah selesai, klik Unduh links.json, lalu unggah file itu ke hosting untuk menggantikan yang lama.</div>
+<div id="out" class="grid"></div>
+<p class="empty" id="empty">Tidak ada link yang cocok.</p>
+<p class="msg" id="msg" role="status"></p>
+</main>
+<script type="application/json" id="data">[
+ {"judul":"Tools monitoring IPF dan SOP","ket":"Alat monitoring dan prosedur kerja.","items":[{"n":"Tools monitoring IPF","u":"#"},{"n":"SOP monitoring","u":"#"}]},
+ {"judul":"Template","ket":"TOR, surat, dan dokumen standar.","items":[{"n":"Template TOR","u":"#"},{"n":"Template surat","u":"#"}]},
+ {"judul":"Online template","ket":"Diisi langsung secara online.","items":[{"n":"Tracking TOR","u":"#"},{"n":"Nomor surat","u":"#"}]},
+ {"judul":"Pengajuan pemakaian mobil","ket":"Ajukan sebelum perjalanan.","items":[{"n":"Form pengajuan mobil","u":"#"}]}
+]
+</script>
+<script>
+var DATA=JSON.parse(document.getElementById("data").textContent),draft=null,editing=false;
+var out=document.getElementById("out"),q=document.getElementById("q"),empty=document.getElementById("empty"),msg=document.getElementById("msg"),editBtn=document.getElementById("edit"),note=document.getElementById("note");
+var ICON="<svg viewBox='0 0 24 24' aria-hidden='true'><path d='M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5'/></svg>";
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function safe(u){u=String(u).trim();if(!u||u==="#")return "#";if(!/^[a-z][a-z0-9+.-]*:/i.test(u))u="https://"+u;return /^(https?|mailto|tel):/i.test(u)?u:"#"}
+function draw(){
+ if(editing)return;
+ var t=q.value.trim().toLowerCase(),h="",n=0;
+ DATA.forEach(function(g){
+  var m=g.items.filter(function(i){return !t||(i.n+" "+g.judul).toLowerCase().indexOf(t)>-1});
+  if(!m.length)return;n+=m.length;
+  h+="<section class='cat'><h2>"+esc(g.judul)+"</h2><p class='desc'>"+esc(g.ket)+"</p>"+
+  m.map(function(i){var u=safe(i.u),ok=u!=="#";return "<a class='item' href='"+esc(u)+"'"+(ok?" target='_blank' rel='noopener'":"")+"><span>"+esc(i.n)+"</span>"+(ok?ICON:"<small>belum diisi</small>")+"</a>"}).join("")+"</section>";
+ });
+ out.innerHTML=h;empty.style.display=n?"none":"block";
+}
+function drawEdit(){
+ var h="";
+ draft.forEach(function(g,gi){
+  h+="<section class='cat eg'><input data-f='judul' data-g='"+gi+"' value=\""+esc(g.judul)+"\" placeholder='Nama kategori' aria-label='Nama kategori'><input data-f='ket' data-g='"+gi+"' value=\""+esc(g.ket)+"\" placeholder='Keterangan singkat' aria-label='Keterangan'>";
+  g.items.forEach(function(it,ii){
+   h+="<div class='row'><input data-f='n' data-g='"+gi+"' data-i='"+ii+"' value=\""+esc(it.n)+"\" placeholder='Nama link' aria-label='Nama link'><input data-f='u' data-g='"+gi+"' data-i='"+ii+"' value=\""+esc(it.u==="#"?"":it.u)+"\" placeholder='https://...' aria-label='Alamat link'><button type='button' data-act='deli' data-g='"+gi+"' data-i='"+ii+"'>Hapus</button></div>";
+  });
+  h+="<div class='bar'><button type='button' data-act='addi' data-g='"+gi+"'>Tambah link</button><button type='button' data-act='delg' data-g='"+gi+"'>Hapus kategori</button></div></section>";
+ });
+ h+="<div class='bar'><button type='button' data-act='addg'>Tambah kategori</button><button type='button' class='pri' data-act='save'>Unduh links.json</button><button type='button' data-act='cancel'>Batal</button></div>";
+ out.innerHTML=h;empty.style.display="none";
+}
+out.addEventListener("input",function(e){
+ var d=e.target.dataset;if(!editing||!d.f)return;
+ var g=draft[+d.g];
+ if(d.i!==undefined)g.items[+d.i][d.f]=e.target.value;else g[d.f]=e.target.value;
+});
+out.addEventListener("click",function(e){
+ var b=e.target.closest("button");if(!editing||!b)return;
+ var a=b.dataset.act,g=+b.dataset.g,i=+b.dataset.i;
+ if(a==="addi")draft[g].items.push({n:"",u:""});
+ else if(a==="deli")draft[g].items.splice(i,1);
+ else if(a==="addg")draft.push({judul:"",ket:"",items:[{n:"",u:""}]});
+ else if(a==="delg"){if(confirm("Hapus kategori ini beserta semua link di dalamnya?"))draft.splice(g,1);else return}
+ else if(a==="cancel"){stop();return}
+ else if(a==="save"){save();return}
+ drawEdit();
+});
+function start(){editing=true;draft=JSON.parse(JSON.stringify(DATA));document.body.classList.add("edit");q.style.display="none";editBtn.style.display="none";note.hidden=false;msg.textContent="";drawEdit()}
+function stop(){editing=false;draft=null;document.body.classList.remove("edit");q.style.display="";note.hidden=true;if(location.hash==="#ubah")editBtn.style.display="inline-block";draw()}
+function save(){
+ var clean=draft.filter(function(g){return g.judul.trim()}).map(function(g){
+  return {judul:g.judul.trim(),ket:g.ket.trim(),items:g.items.filter(function(i){return i.n.trim()}).map(function(i){return {n:i.n.trim(),u:safe(i.u)}})};
+ });
+ var blob=new Blob([JSON.stringify(clean,null,1)],{type:"application/json"});
+ var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="links.json";document.body.appendChild(a);a.click();a.remove();
+ DATA=clean;msg.textContent="File links.json sudah diunduh. Unggah ke hosting agar tim melihat perubahannya.";
+ stop();
+}
+editBtn.addEventListener("click",start);
+q.addEventListener("input",draw);
+if(location.hash==="#ubah")editBtn.style.display="inline-block";
+draw();
+fetch("links.json",{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(d){if(d&&Array.isArray(d)&&!editing){DATA=d;draw()}}).catch(function(){});
+</script>
+</body>
+</html>
